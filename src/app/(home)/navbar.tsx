@@ -6,6 +6,9 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { NavbarSidebar } from "./navbar-sidebar";
+import { useState } from "react";
+import { MenuIcon } from "lucide-react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -39,15 +42,16 @@ const NavbarItem = ({
 };
 
 const navbarItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", children: "Home" },
+  { href: "/about", children: "About" },
+  { href: "/features", children: "Features" },
+  { href: "/pricing", children: "Pricing" },
+  { href: "/contact", children: "Contact" },
 ]
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <nav className="h-20 flex border-b justify-between font-medium bg-white">
@@ -57,6 +61,12 @@ export const Navbar = () => {
         </span>
       </Link>
 
+      <NavbarSidebar
+        items={navbarItems}
+        open={isSidebarOpen}
+        onOpenChange={setSidebarOpen}
+      />
+
       <div className="items-center gap-4 hidden lg:flex">
         {navbarItems.map((item) => (
           <NavbarItem
@@ -64,7 +74,7 @@ export const Navbar = () => {
             href={item.href}
             isActive={pathname === item.href}
           >
-            {item.label}
+            {item.children}
           </NavbarItem>
         ))}
       </div>
@@ -86,6 +96,16 @@ export const Navbar = () => {
           <Link href="/sign-up">
             Start selling
           </Link>
+        </Button>
+      </div>
+
+      <div className="flex lg:hidden items-center justify-center">
+        <Button
+          variant={"ghost"}
+          className="size-12 border-transparent bg-white"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <MenuIcon />
         </Button>
       </div>
     </nav>
