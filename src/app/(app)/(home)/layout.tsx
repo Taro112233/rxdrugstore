@@ -6,7 +6,6 @@ import { Footer } from "./footer";
 import { Navbar } from "./navbar";
 import { SearchFilters } from "./search-filters";
 
-
 interface Props {
   children: React.ReactNode;
 }
@@ -32,15 +31,15 @@ const Layout = async ({ children }: Props) => {
     subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
       //Because of "depth: 1" we are confident doc will be a type of Category
       ...(doc as Category),
-    }))
-  }))
+    })),
+  }));
 
   console.log(data, formattedData);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <SearchFilters data={data} />
+      <SearchFilters data={formattedData} />
       <div className="flex-1 bg-[#F4F4F0]">{children}</div>
       <Footer />
     </div>
