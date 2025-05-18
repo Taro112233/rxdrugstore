@@ -13,7 +13,7 @@ export const Categories = ({ data }: Props) => {
                     <CategoryDropdown 
                     category={category}
                     isActive={false}
-                    isNavigationHover={false}
+                    isNavigationHovered={false}
                     />
                 </div>
             ))}
