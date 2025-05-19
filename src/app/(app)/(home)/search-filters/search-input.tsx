@@ -29,15 +29,15 @@ export const SearchInput = ({ disabled, data }: Props) => {
           placeholder="Search products"
           disabled={disabled}
         />
-        {/* TODO: Add categories view all button */}
-        <Button
-          variant="elevated"
-          className="size-12 shrink-0 flex lg:hidden"
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <ListFilterIcon />
-        </Button>
       </div>
+      {/* TODO: Add categories view all button */}
+      <Button
+        variant="elevated"
+        className="size-12 shrink-0 flex lg:hidden"
+        onClick={() => setIsSidebarOpen(true)}
+      >
+        <ListFilterIcon />
+      </Button>
     </div>
   );
 };
