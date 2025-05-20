@@ -66,7 +66,6 @@ export const Categories = ({ data }: Props) => {
       <CategoriesSidebar
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
-        data={data}
       />
 
       {/* Hidden div to measure all items */}
@@ -107,8 +106,8 @@ export const Categories = ({ data }: Props) => {
             className={cn(
               "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
               isActiveCategoryHidden &&
-                !isAnyHovered &&
-                "bg-white border-primary"
+              !isAnyHovered &&
+              "bg-white border-primary"
             )}
             onClick={() => setIsSidebarOpen(true)}
           >
