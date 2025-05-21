@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -53,12 +54,37 @@ export const SignUpView = () => {
                   funroad
                 </span>
               </Link>
-              <Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-base border-none underline"
+              >
                 <Link prefetch href="/sign-in">
                   Sign in
                 </Link>
               </Button>
             </div>
+            <h1 className="text-4xl font-medium">
+              Join over 1,580 creators earning money on Funroad.
+            </h1>
+            <FormField
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base">Username</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormDescription
+                    className={cn("hidden", true && "block")}
+                  >
+                    Your store will be available at&nbsp;
+                    <strong></strong>
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
       </div>
