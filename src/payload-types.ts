@@ -184,6 +184,9 @@ export interface Product {
   id: string;
   name: string;
   description?: string | null;
+  /**
+   * in THB
+   */
   price: number;
   category?: (string | null) | Category;
   image?: (string | null) | Media;
