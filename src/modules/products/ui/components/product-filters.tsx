@@ -38,7 +38,13 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 export const ProductFilters = () => {
   const [filters, setFilters] = useProductFilters();
 
-  const hasAnyFilters = Object.entries(filters).some(([value]) => {
+  const hasAnyFilters = Object.entries(filters).some(([key, value]) => {
+    if (key === "sort") return false;
+
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+
     if (typeof value === "string") {
       return value !== "";
     }
@@ -78,7 +84,7 @@ export const ProductFilters = () => {
       </ProductFilter>
       <ProductFilter title="Tags" className="border-b-0">
         <TagsFilter
-          value={filters.tags ?? []}
+          value={filters.tags}
           onChange={(value) => onChange("tags", value)}
         />
       </ProductFilter>
