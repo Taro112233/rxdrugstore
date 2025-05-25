@@ -1,7 +1,7 @@
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { z } from "zod";
 import { Sort, Where } from "payload";
-import { Category, Media } from "@/payload-types";
+import { Category, Media, Tenant } from "@/payload-types";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 
@@ -94,18 +94,21 @@ export const productsRouter = createTRPCRouter({
 
       const data = await ctx.db.find({
         collection: "products",
-        depth: 1, //Populate "categoy" & "image"
+        depth: 2, //Populate "categoy", "image", "tenant" & "tenant.image"
         where,
         sort,
         page: input.cursor,
         limit: input.limit,
       });
 
+      console.log(JSON.stringify(data.docs, null, 2));
+
       return {
         ...data,
         docs: data.docs.map((doc) => ({
           ...doc,
           image: doc.image as Media | null,
+          tenant: doc.tenant as Tenant & { image: Media | null },
         })),
       };
     }),
