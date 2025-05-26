@@ -1,33 +1,33 @@
 import type { SearchParams } from "nuqs/server";
-import { getQueryClient, trpc } from "@/trpc/server";
+
+import { DEFAULT_LIMIT } from "@/constants";
+import { trpc, getQueryClient } from "@/trpc/server";
+
+import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { loadProductFilters } from "@/modules/products/search-params";
-import { ProductListView } from "@/modules/products/ui/views/product-list-view";
-import { DEFAULT_LIMIT } from "@/constants";
 
 interface Props {
-  params: Promise<{
-    category: string;
-  }>,
   searchParams: Promise<SearchParams>;
+  params: Promise<{ slug: string }>;
 };
 
 const Page = async ({ params, searchParams }: Props) => {
-  const { category } = await params;
+  const { slug } = await params;
   const filters = await loadProductFilters(searchParams);
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
     ...filters,
-    category,
+    tenantSlug: slug,
     limit: DEFAULT_LIMIT,
   }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductListView category={category} />
+      <ProductListView tenantSlug={slug} />
     </HydrationBoundary>
   )
-}
+};
 
 export default Page;
