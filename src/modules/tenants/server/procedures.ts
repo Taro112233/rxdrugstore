@@ -1,3 +1,4 @@
+import { Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -12,6 +13,7 @@ export const tenantsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const tenantsData = await ctx.db.find({
         collection: "tenants",
+        depth: 1, // "tenant.image is a type of media"
         where: {
           slug: {
             equals: input.slug,
@@ -30,6 +32,6 @@ export const tenantsRouter = createTRPCRouter({
         });
       }
 
-      return tenant;
+      return tenant as Tenant & { image: Media | null };
     }),
 });
