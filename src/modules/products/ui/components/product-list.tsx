@@ -30,6 +30,10 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
         },
         {
           getNextPageParam: (lastPage) => {
+            // เพิ่ม null checking เพื่อป้องกัน error
+            if (!lastPage || !lastPage.docs || !Array.isArray(lastPage.docs)) {
+              return undefined;
+            }
             return lastPage.docs.length > 0 ? lastPage.nextPage : undefined;
           },
         }
@@ -54,7 +58,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
         )}
       >
         {data?.pages
-          .flatMap((page) => page.docs)
+          .flatMap((page) => page?.docs || []) // เพิ่ม fallback เป็น empty array
           .map((product) => (
             <ProductCard
               key={product.id}
