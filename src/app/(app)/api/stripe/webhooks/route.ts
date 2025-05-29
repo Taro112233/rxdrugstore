@@ -78,7 +78,7 @@ export async function POST(req: Request) {
               data: {
                 stripeCheckoutSessionId: data.id,
                 user: user.id,
-                product: item.price.product.id,
+                product: item.price.product.metadata.id,
                 name: item.price.product.name,
               },
             });
