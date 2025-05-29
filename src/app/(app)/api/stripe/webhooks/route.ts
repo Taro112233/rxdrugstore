@@ -43,13 +43,13 @@ export async function POST(req: Request) {
         case "checkout.session.completed":
           data = event.data.object as Stripe.Checkout.Session;
 
-          if (!data.metadata?.orderId) {
+          if (!data.metadata?.userId) {
             throw new Error("User ID is required");
           }
 
           const user = await payload.findByID({
             collection: "users",
-            id: data.metadata.userId as string,
+            id: data.metadata.userId,
           });
 
           if (!user) {
@@ -70,8 +70,7 @@ export async function POST(req: Request) {
             throw new Error("No line items found");
           }
 
-          const lineItems = expandedSession.line_items
-            .data as ExpandedLineItem[];
+          const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
 
           for (const item of lineItems) {
             await payload.create({
