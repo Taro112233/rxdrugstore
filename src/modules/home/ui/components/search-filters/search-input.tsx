@@ -45,9 +45,9 @@ export const SearchInput = ({ disabled }: Props) => {
           asChild
           variant="elevated"
         >
-          <Link href="/libraly">
+          <Link href="/library">
             <BookmarkCheckIcon />
-            Libraly
+            Library
           </Link>
         </Button>
       )}
