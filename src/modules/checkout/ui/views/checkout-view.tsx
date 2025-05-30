@@ -40,18 +40,19 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
         if (error.data?.code === "UNAUTHORIZED") {
           router.push("/sign-in");
         }
-        
+
         toast.error(error.message);
       },
     })
   );
 
   useEffect(() => {
+    console.log("triggered")
     if (states.success) {
-      setStates({ success: false, cancel: false });
+      // setStates({ success: false, cancel: false });
       clearCart();
       // TODO: Invalidate library
-      router.push("/products");
+      // router.push("/products");
     }
   }, [states.success, clearCart, router, setStates]);
 
