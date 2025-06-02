@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { z } from "zod";
 import { Media, Tenant } from "@/payload-types";
 import { DEFAULT_LIMIT } from "@/constants";
+import { TRPCError } from "@trpc/server";
 
 export const libraryRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -15,45 +16,44 @@ export const libraryRouter = createTRPCRouter({
         collection: "orders",
         limit: 1,
         pagination: false,
-        depth: 0, // We want to just get ids, without populating
         where: {
-          user: {
-            and: [
-              {
-                product: {
-                  equals: input.productId,
-                },
+          and: [
+            {
+              product: {
+                equals: input.productId,
               },
-              {
-                user: {
-                  equals: ctx.session.user.id,
-                },
+            },
+            {
+              user: {
+                equals: ctx.session.user.id,
               },
-            ],
-          },
+            },
+          ],
         },
       });
 
-      const productIds = ordersData.docs.map((order) => order.product);
+      const order = ordersData.docs[0];
 
-      const productsData = await ctx.db.find({
+      if (!order) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Order not found",
+        });
+      }
+
+      const product = await ctx.db.findByID({
         collection: "products",
-        pagination: false,
-        where: {
-          id: {
-            in: productIds,
-          },
-        },
+        id: input.productId,
       });
 
-      return {
-        ...productsData,
-        docs: productsData.docs.map((doc) => ({
-          ...doc,
-          image: doc.image as Media | null,
-          tenant: doc.tenant as Tenant & { image: Media | null },
-        })),
-      };
+      if (!product) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Product not found",
+        });
+      }
+
+      return product;
     }),
 
   getMany: protectedProcedure
