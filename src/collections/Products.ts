@@ -13,6 +13,10 @@ export const Products: CollectionConfig = {
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
   },
+  admin: {
+    useAsTitle: "name",
+    description: "You must verify your account before creating products",
+  },
   fields: [
     {
       name: "name",
@@ -65,8 +69,9 @@ export const Products: CollectionConfig = {
       // TODO: Change to rich text
       type: "textarea",
       admin: {
-        description: "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guide, and bonus materials. Supports Markdown.",
+        description:
+          "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guide, and bonus materials. Supports Markdown.",
       },
-    }
+    },
   ],
 };
