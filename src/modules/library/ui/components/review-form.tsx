@@ -5,17 +5,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useTRPC } from "@/trpc/client";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { StarPicker } from "@/components/star-picker"
+import { StarPicker } from "@/components/star-picker";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form"
-
+} from "@/components/ui/form";
 
 import { ReviewsGetOneOutput } from "@/modules/reviews/types";
 import { toast } from "sonner";
@@ -27,44 +26,52 @@ interface Props {
 
 const formSchema = z.object({
   rating: z.number().min(1, { message: "Rating is required" }).max(5),
-  description: z.string().min(1, { message: "Description is required" })
-})
+  description: z.string().min(1, { message: "Description is required" }),
+});
 
 export const ReviewForm = ({ productId, initialData }: Props) => {
   const [isPreview, setIsPreview] = useState(!!initialData);
 
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const createReview = useMutation(trpc.reviews.create.mutationOptions({
-    onSuccess: () => {
-      queryClient.invalidateQueries(trpc.reviews.getOne.queryOptions({
-        productId,
-      }))
-      setIsPreview(true);
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  }))
-  const updateReview = useMutation(trpc.reviews.update.mutationOptions({
-    onSuccess: () => {
-      queryClient.invalidateQueries(trpc.reviews.getOne.queryOptions({
-        productId,
-      }))
-      setIsPreview(true);
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  }))
+  const createReview = useMutation(
+    trpc.reviews.create.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(
+          trpc.reviews.getOne.queryOptions({
+            productId,
+          })
+        );
+        setIsPreview(true);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    })
+  );
+  const updateReview = useMutation(
+    trpc.reviews.update.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(
+          trpc.reviews.getOne.queryOptions({
+            productId,
+          })
+        );
+        setIsPreview(true);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    })
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       rating: initialData?.rating ?? 0,
-      description: initialData?.description ?? ""
-    }
-  })
+      description: initialData?.description ?? "",
+    },
+  });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (initialData) {
@@ -72,15 +79,15 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         reviewId: initialData.id,
         rating: values.rating,
         description: values.description,
-      })
+      });
     } else {
       createReview.mutate({
         productId,
         rating: values.rating,
         description: values.description,
-      })
+      });
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -148,5 +155,24 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         </Button>
       )}
     </Form>
-  )
-}
+  );
+};
+
+export const ReviewFormSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-y-4">
+      <p className="font-medium">Like it? Give it a rating</p>
+      <StarPicker disabled />
+      <Textarea placeholder="Want to leave a written review?" disabled />
+      <Button
+        variant="elevated"
+        disabled
+        type="button"
+        size="lg"
+        className="bg-black text-white hover:bg-pink-400 hover:text-primary w-fit"
+      >
+        Post review
+      </Button>
+    </div>
+  );
+};
