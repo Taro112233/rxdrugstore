@@ -16,12 +16,15 @@ import { Fragment, useState } from "react";
 import { toast } from "sonner";
 
 const CartButton = dynamic(
-  () => import("../components/cart-button").then
-    (mod => mod.CartButton),
+  () => import("../components/cart-button").then((mod) => mod.CartButton),
   {
     ssr: false,
-    loading: () => <Button disabled className="flex-1 bg-pink-400">Loading...</Button>
-  },
+    loading: () => (
+      <Button disabled className="flex-1 bg-pink-400">
+        Loading...
+      </Button>
+    ),
+  }
 );
 
 interface ProductViewProps {
@@ -63,7 +66,10 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               </div>
 
               <div className="px-6 py-4 flex items-center justify-center lg:border-r">
-                <Link href={generateTenantURL(tenantSlug)} className="flex items-center gap-2">
+                <Link
+                  href={generateTenantURL(tenantSlug)}
+                  className="flex items-center gap-2"
+                >
                   {data.tenant.image?.url && (
                     <Image
                       src={data.tenant.image.url}
@@ -94,10 +100,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 
             <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
               <div className="flex items-center gap-2">
-                <StarRating
-                  rating={data.reviewRating}
-                  iconClassName="size-4"
-                />
+                <StarRating rating={data.reviewRating} iconClassName="size-4" />
                 <p className="text-base font-medium">
                   {data.reviewCount} ratings
                 </p>
@@ -144,8 +147,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                 <p className="text-center font-medium">
                   {data.refundPolicy === "no-refunds"
                     ? "No refunds"
-                    : `${data.refundPolicy} money back guarantee`
-                  }
+                    : `${data.refundPolicy} money back guarantee`}
                 </p>
               </div>
 
@@ -158,12 +160,12 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                     <p className="text-base">{data.reviewCount} ratings</p>
                   </div>
                 </div>
-                <div
-                  className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4"
-                >
+                <div className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4">
                   {[5, 4, 3, 2, 1].map((stars) => (
                     <Fragment key={stars}>
-                      <div className="font-medium">{stars} {stars === 1 ? "star" : "stars"}</div>
+                      <div className="font-medium">
+                        {stars} {stars === 1 ? "star" : "stars"}
+                      </div>
                       <Progress
                         value={data.ratingDistribution[stars]}
                         className="h-[1lh]"
@@ -177,6 +179,23 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="px-4 lg:px-12 py-10">
+      <div className="border rounded-sm bg-white overflow-hidden">
+        <div className="relative aspect-[3.9] border-b">
+          <Image
+            src={"/placeholder.png"}
+            alt="Placeholder"
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
     </div>

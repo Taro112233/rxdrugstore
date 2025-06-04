@@ -12,6 +12,7 @@ export const Products: CollectionConfig = {
 
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
+    delete: ({ req }) => isSuperAdmin(req.user),
   },
   fields: [
     {
@@ -65,8 +66,19 @@ export const Products: CollectionConfig = {
       // TODO: Change to rich text
       type: "textarea",
       admin: {
-        description: "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guide, and bonus materials. Supports Markdown.",
+        description:
+          "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guide, and bonus materials. Supports Markdown.",
       },
-    }
+    },
+    {
+      name: "isArchived",
+      label: "Archive",
+      defaultValue: false,
+      type: "checkbox",
+      admin: {
+        description:
+          "If checked, this product will not be visible to customers.",
+      },
+    },
   ],
 };
