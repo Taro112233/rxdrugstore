@@ -79,7 +79,7 @@ export const SignUpView = () => {
                 <span
                   className={cn("text-2xl font-semibold", poppins.className)}
                 >
-                  funroad
+                  Rxdrugstore
                 </span>
               </Link>
               <Button
@@ -94,7 +94,7 @@ export const SignUpView = () => {
               </Button>
             </div>
             <h1 className="text-4xl font-medium">
-              Join over 1,580 creators earning money on Funroad.
+              Join over 1,580 creators earning money on Rxdrugstore.
             </h1>
             <FormField
               name="username"
