@@ -53,7 +53,7 @@ export const Users: CollectionConfig = {
       options: ["super-admin", "user"],
       access: {
         update: ({ req }) => isSuperAdmin(req.user),
-      }
+      },
     },
     {
       ...defaultTenantArrayField,
