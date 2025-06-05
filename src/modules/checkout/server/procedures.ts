@@ -9,6 +9,7 @@ import { TRPCError } from "@trpc/server";
 import type Stripe from "stripe";
 import { CheckoutMetadata, ProductMetadata } from "../types";
 import { stripe } from "@/lib/stripe";
+import { generateTenantURL } from "@/lib/utils";
 export const checkoutRouter = createTRPCRouter({
   purchase: protectedProcedure
     .input(
@@ -89,13 +90,7 @@ export const checkoutRouter = createTRPCRouter({
           },
         }));
 
-      let domain;
-
-      if (process.env.NODE_ENV === "development") {
-        domain = `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}`;
-      } else {
-        domain = `${input.tenantSlug}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
-      }
+      const domain = generateTenantURL(input.tenantSlug);
 
       const checkout = await stripe.checkout.sessions.create({
         customer_email: ctx.session.user.email,
