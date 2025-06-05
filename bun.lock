@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "ecommerce",
+      "name": "rxdrugstore",
       "dependencies": {
         "@hookform/resolvers": "^5.0.1",
         "@payloadcms/db-mongodb": "^3.38.0",
