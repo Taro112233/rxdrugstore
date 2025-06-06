@@ -31,7 +31,7 @@ export const productsRouter = createTRPCRouter({
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Product not found",
-        })
+        });
       }
 
       let isPurchased = false;
@@ -118,6 +118,7 @@ export const productsRouter = createTRPCRouter({
       z.object({
         cursor: z.number().default(1),
         limit: z.number().default(DEFAULT_LIMIT),
+        search: z.string().nullable().optional(),
         category: z.string().nullable().optional(),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
@@ -171,7 +172,7 @@ export const productsRouter = createTRPCRouter({
         // These products are exclusively private to the tenant store
         where["isPrivate"] = {
           not_equals: true,
-        }
+        };
       }
 
       if (input.category) {
@@ -215,6 +216,21 @@ export const productsRouter = createTRPCRouter({
         where["tags.name"] = {
           in: input.tags,
         };
+      }
+
+      if (input.search) {
+        where.or = [
+          {
+            name: {
+              like: input.search,
+            },
+          },
+          {
+            description: {
+              like: input.search,
+            },
+          },
+        ];
       }
 
       const data = await ctx.db.find({
