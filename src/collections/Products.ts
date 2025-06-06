@@ -23,7 +23,7 @@ export const Products: CollectionConfig = {
     {
       name: "description",
       // TODO: Change to rich text
-      type: "richText",
+      type: "textarea",
     },
     {
       name: "price",
