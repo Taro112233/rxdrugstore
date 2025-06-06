@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import Link from "next/link";
 
-
 interface Props {
   tenantSlug: string;
   productId: string;
   isPurchased?: boolean;
-};
+}
 
 export const CartButton = ({ tenantSlug, productId, isPurchased }: Props) => {
   const cart = useCart(tenantSlug);
@@ -21,11 +20,11 @@ export const CartButton = ({ tenantSlug, productId, isPurchased }: Props) => {
         asChild
         className="flex-1 font-medium bg-white"
       >
-        <Link href={`/library/${productId}`}>
+        <Link href={`${process.env.NEXT_PUBLIC_APP_URL}/library/${productId}`}>
           View in Library
         </Link>
       </Button>
-    )
+    );
   }
 
   return (
@@ -37,13 +36,15 @@ export const CartButton = ({ tenantSlug, productId, isPurchased }: Props) => {
       )}
       onClick={() => cart.toggleProduct(productId)}
     >
-      {cart.isProductInCart(productId)
-        ? "Remove from cart"
-        : "Add to cart"}
+      {cart.isProductInCart(productId) ? "Remove from cart" : "Add to cart"}
     </Button>
-  )
-}
+  );
+};
 
 export const CartButtonSkeleton = () => {
-  return <Button disabled className="flex-1 bg-pink-400">Loading...</Button>
-}
+  return (
+    <Button disabled className="flex-1 bg-pink-400">
+      Loading...
+    </Button>
+  );
+};
