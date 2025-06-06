@@ -4,6 +4,9 @@ import { Tenant } from "@/payload-types";
 
 export const Products: CollectionConfig = {
   slug: "products",
+  admin: {
+    useAsTitle: "name",
+  },
   access: {
     create: ({ req }) => {
       if (isSuperAdmin(req.user)) return true;
