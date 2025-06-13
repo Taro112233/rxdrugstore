@@ -1,8 +1,7 @@
 const Page = () => {
   return (
     <div>
-      <h1>Pricing</h1>
-      <p>This is the pricing page.</p>
+      <h1>Not available</h1>
     </div>
   );
 }
