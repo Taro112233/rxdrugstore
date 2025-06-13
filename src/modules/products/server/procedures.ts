@@ -133,18 +133,24 @@ export const productsRouter = createTRPCRouter({
           not_equals: true,
         },
       };
-      let sort: Sort = "-createdAt";
+      let sort: Sort = "name"; // Default to name ascending
 
-      if (input.sort === "curated") {
-        sort = "-createdAt";
-      }
-
-      if (input.sort === "hot_and_new") {
-        sort = "+createdAt";
-      }
-
-      if (input.sort === "trending") {
-        sort = "-createdAt";
+      // Handle sorting options
+      switch (input.sort) {
+        case "name_asc":
+          sort = "name";
+          break;
+        case "name_desc":
+          sort = "-name";
+          break;
+        case "price_asc":
+          sort = "price";
+          break;
+        case "price_desc":
+          sort = "-price";
+          break;
+        default:
+          sort = "name";
       }
 
       if (input.minPrice && input.maxPrice) {
@@ -213,9 +219,11 @@ export const productsRouter = createTRPCRouter({
       }
 
       if (input.tags && input.tags.length > 0) {
-        where["tags.name"] = {
-          in: input.tags,
-        };
+        where.and = input.tags.map((tag) => ({
+          "tags.name": {
+            equals: tag,
+          },
+        }));
       }
 
       if (input.search) {
