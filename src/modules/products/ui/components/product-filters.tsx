@@ -19,10 +19,7 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
   const Icon = isOpen ? ChevronDownIcon : ChevronRightIcon;
 
   return (
-    <div className={cn(
-      "p-4 border-b flex flex-col gap-2",
-      className)
-    }>
+    <div className={cn("p-4 border-b flex flex-col gap-2", className)}>
       <div
         onClick={() => setIsOpen((current) => !current)}
         className="flex items-center justify-between cursor-pointer"
@@ -69,7 +66,11 @@ export const ProductFilters = () => {
       <div className="p-4 border-b flex items-center justify-between">
         <p className="font-medium">Filters</p>
         {hasAnyFilters && (
-          <button className="underline cursor-pointer" onClick={() => onClear()} type="button">
+          <button
+            className="cursor-pointer text-red-600"
+            onClick={() => onClear()}
+            type="button"
+          >
             Clear
           </button>
         )}
@@ -89,5 +90,5 @@ export const ProductFilters = () => {
         />
       </ProductFilter>
     </div>
-  )
-}
+  );
+};

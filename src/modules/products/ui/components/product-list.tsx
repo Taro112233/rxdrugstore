@@ -50,7 +50,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
       <div
         className={cn(
           "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4",
-          narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
+          narrowView && "lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
         )}
       >
         {data?.pages
@@ -62,6 +62,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
               name={product.name}
               imageUrl={product.image?.url}
               tenantSlug={product.tenant?.slug}
+              description={product.description}
               tenantImageUrl={product.tenant?.image?.url}
               reviewRating={product.reviewRating}
               reviewCount={product.reviewCount}
@@ -90,7 +91,7 @@ export const ProductListSkeleton = ({ narrowView }: Props) => {
     <div
       className={cn(
         "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4",
-        narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
+        narrowView && "lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
       )}
     >
       {Array.from({ length: DEFAULT_LIMIT }).map((_, index) => (
