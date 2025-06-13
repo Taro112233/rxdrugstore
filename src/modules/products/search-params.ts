@@ -5,7 +5,7 @@ import {
   parseAsStringLiteral,
 } from "nuqs/server";
 
-export const sortValues = ["curated", "trending", "hot_and_new"] as const;
+export const sortValues = ["name_asc", "name_desc", "price_asc", "price_desc"] as const;
 
 export const params = {
   search: parseAsString
@@ -13,7 +13,7 @@ export const params = {
       clearOnDefault: true,
     })
     .withDefault(""),
-  sort: parseAsStringLiteral(sortValues).withDefault("curated"),
+  sort: parseAsStringLiteral(sortValues).withDefault("name_asc"),
   minPrice: parseAsString
     .withOptions({
       clearOnDefault: true,
