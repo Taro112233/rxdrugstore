@@ -7,6 +7,7 @@ interface CheckoutItemProps {
   isLast?: boolean;
   imageUrl?: string | null;
   name: string;
+  description?: string | null;
   productUrl: string;
   tenantUrl: string;
   tenantName: string;
@@ -18,9 +19,8 @@ export const CheckoutItem = ({
   isLast,
   imageUrl,
   name,
+  description,
   productUrl,
-  tenantUrl,
-  tenantName,
   price,
   onRemove,
 }: CheckoutItemProps) => {
@@ -45,18 +45,16 @@ export const CheckoutItem = ({
       <div className="py-4 flex flex-col justify-between">
         <div>
           <Link href={productUrl}>
-            <h4 className="font-bold underline">{name}</h4>
+            <h4 className="font-bold">{name}</h4>
           </Link>
-          <Link href={tenantUrl}>
-            <h4 className="font-medium underline">{tenantName}</h4>
-          </Link>
+            <h4 className="font-light text-gray-600">{description}</h4>
         </div>
       </div>
 
       <div className="py-4 flex flex-col justify-between">
         <p className="font-medium">{formatCurrency(price)}</p>
         <button
-          className="underline font-medium cursor-pointer"
+          className="font-medium cursor-pointer text-red-600"
           onClick={onRemove}
           type="button"
         >

@@ -1,8 +1,7 @@
 const Page = () => {
   return (
     <div>
-      <h1>Contact</h1>
-      <p>This is the contact page.</p>
+      <h1>Not available</h1>
     </div>
   );
 }

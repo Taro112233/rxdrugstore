@@ -94,7 +94,7 @@ export const SignUpView = () => {
               </Button>
             </div>
             <h1 className="text-4xl font-medium">
-              Join over 1,580 creators earning money on Rxdrugstore.
+            Join the community of Rxdrugstore users.
             </h1>
             <FormField
               name="username"
@@ -141,7 +141,7 @@ export const SignUpView = () => {
                 </FormItem>
               )}
             />
-            <Button
+            {/* <Button
               disabled={register.isPending}
               type="submit"
               size="lg"
@@ -149,7 +149,7 @@ export const SignUpView = () => {
               className="bg-black text-white hover:bg-pink-400 hover:text-primary"
             >
               Create account
-            </Button>
+            </Button> */}
           </form>
         </Form>
       </div>

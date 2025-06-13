@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
+import { ListFilterIcon, SearchIcon, ShoppingCartIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -50,9 +50,9 @@ export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
       </Button>
       {session.data?.user && (
         <Button asChild variant="elevated">
-          <Link prefetch href="/library">
-            <BookmarkCheckIcon />
-            Library
+          <Link prefetch href="/tenants/rxdrugstore/checkout">
+          <ShoppingCartIcon className="text-black" />
+          Cart
           </Link>
         </Button>
       )}
