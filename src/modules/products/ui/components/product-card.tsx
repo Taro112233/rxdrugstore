@@ -1,8 +1,9 @@
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from "lucide-react";
-import { formatCurrency, generateTenantURL } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
+// import { generateTenantURL } from "@/lib/utils";
 
 // TODO: add real ratings
 
@@ -19,7 +20,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({
-  id,
+  // id,
   name,
   imageUrl,
   tenantSlug,
@@ -30,7 +31,8 @@ export const ProductCard = ({
   price,
 }: ProductCardProps) => {
   return (
-    <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`}>
+    // <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`}>
+    <div>
       <div className="hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-shadow border rounded-md bg-white overflow-hidden h-full flex flex-col">
         <div className="relative aspect-square">
           <Image
@@ -69,7 +71,7 @@ export const ProductCard = ({
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
